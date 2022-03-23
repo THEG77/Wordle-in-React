@@ -25,6 +25,8 @@ function App() {
     
     setWordleWord(words[Math.floor(Math.random() * words.length)])
   },[])
+  
+
   const checkColumnInput = (input, jugadooIndex) => {
     console.log("Current col: " + jugadooIndex);
     for(let i = 0;  i<input.length; i++){
@@ -44,8 +46,9 @@ function App() {
     }
     if(input === wordleWord){
       alert(`You Won... The Word was ${wordleWord}`)
+      setCurColumn(200)
     }
-    if(jugadooIndex > 5 ){
+    if(jugadooIndex > 5 && jugadooIndex <100 ){
       alert(`You LOST... The Word was ${wordleWord}`)
     }
   }
@@ -250,7 +253,7 @@ function App() {
     // setCurWord((curWord)=> curWord.append(e) )
   }
   return (
-    <div className="App" tabIndex="0" onKeyUp={(event)=> handleInput(event.key)} >
+    <div className="App" tabIndex="0" onKeyUp={(event)=> handleInput(event.key)} id="app" >
       <div className='maindiv' >
         <text className='titleText'> Wordle </text>
         <div className='column'>
@@ -272,6 +275,10 @@ function App() {
           {rowFunc(5)}
         </div>
         <text style={{color: 'white'}}>{curColumn}</text>
+      <div className='info' onClick={()=>alert(`RULES:
+      -You get 6 tries to guess the word
+      -Brown background means correct letter but invaid index
+      -Green background means correct letter at correct index`)} ><h1>?</h1></div>
       </div>
     </div>
   );
