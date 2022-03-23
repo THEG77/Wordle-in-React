@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Wordle-in-React/static/css/main.141c766b.css",
+    "main.js": "/Wordle-in-React/static/js/main.0bc4ded2.js",
+    "static/js/787.e01666d6.chunk.js": "/Wordle-in-React/static/js/787.e01666d6.chunk.js",
+    "static/media/logo.svg": "/Wordle-in-React/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/Wordle-in-React/index.html",
+    "main.141c766b.css.map": "/Wordle-in-React/static/css/main.141c766b.css.map",
+    "main.0bc4ded2.js.map": "/Wordle-in-React/static/js/main.0bc4ded2.js.map",
+    "787.e01666d6.chunk.js.map": "/Wordle-in-React/static/js/787.e01666d6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.141c766b.css",
+    "static/js/main.0bc4ded2.js"
+  ]
+}
