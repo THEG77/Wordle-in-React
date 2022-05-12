@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from 'react';
+import {MdRestartAlt} from 'react-icons/md';
 function App() {
   const words = ["GRAPE","MOVIE","DODGE", "SHAKE", "ROBIN", "ELDER", "SKILL", "PAUSE", "MOIST", "FRAME", "AHEAD", "ALONE", "RUPEE", "MONTH", "SWEET"];
   const [wordleWord, setWordleWord] = useState("")
@@ -13,22 +14,63 @@ function App() {
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0]
   ])
-  console.log(matchedArr);
+  // console.log(matchedArr);
   const [rowWord0, setRowWord0] = useState("");
   const [rowWord1, setRowWord1] = useState("");
   const [rowWord2, setRowWord2] = useState("");
   const [rowWord3, setRowWord3] = useState("");
   const [rowWord4, setRowWord4] = useState("");
   const [rowWord5, setRowWord5] = useState("");
-
+  const [starttime,setStarttime] = useState(Date.now());
+  const [timer, setTimer] = useState(0);
+  const [showRtTimer, setShowRtTimer] = useState(true);
+  let comptime = 0;
   useEffect(()=>{
-    
+    // setStarttime(Date.now());
+    setShowRtTimer(true)  
     setWordleWord(words[Math.floor(Math.random() * words.length)])
+    setInterval(() => {
+        let s = 0;
+        setStarttime((seconds) => {s = seconds; return seconds;});
+        let curtime  = millisecondsToTime(Date.now()-s);
+        // console.log(curtime)
+        // console.log(starttime)
+        setTimer(curtime)
+    }, 100)
   },[])
-  
 
+  function millisecondsToTime(milli)
+{
+      var milliseconds = milli % 1000;
+      var seconds = Math.floor((milli / 1000) % 60);
+      var minutes = Math.floor((milli / (60 * 1000)) % 60);
+
+      return minutes + ":" + seconds + "." + milliseconds;
+}
+  const restartSession =()=> {
+    setShowRtTimer(true)
+    const temptime =  Date.now();
+    setStarttime(temptime)
+    console.log(starttime);
+    setWordleWord(words[Math.floor(Math.random() * words.length)])
+    setCurColumn(0)
+    setMatchedArr([
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0]
+    ])
+    setRowWord0("")
+    setRowWord1("")
+    setRowWord2("")
+    setRowWord3("")
+    setRowWord4("")
+    setRowWord5("")
+  }
   const checkColumnInput = (input, jugadooIndex) => {
-    console.log("Current col: " + jugadooIndex);
+    // console.log("Current col: " + jugadooIndex);
     for(let i = 0;  i<input.length; i++){
       if(wordleWord.includes(input.charAt(i))){
         if(wordleWord.indexOf(input.charAt(i)) === i){
@@ -45,7 +87,11 @@ function App() {
       }
     }
     if(input === wordleWord){
-      alert(`You Won... The Word was ${wordleWord}`)
+      comptime = timer;
+      setShowRtTimer(false)
+
+      alert(`You Won... The Word was ${wordleWord}
+You Took ${comptime} to guess the word!`)
       setCurColumn(200)
     }
     if(jugadooIndex > 5 && jugadooIndex <100 ){
@@ -275,10 +321,12 @@ function App() {
           {rowFunc(5)}
         </div>
         <text style={{color: 'white'}}>{curColumn}</text>
+        {showRtTimer ? <text style={{color: 'white'}}>{timer}</text> : <text style={{color: 'white'}}>{comptime}</text> }
       <div className='info' onClick={()=>alert(`RULES:
       -You get 6 tries to guess the word
       -Brown background means correct letter but invaid index
       -Green background means correct letter at correct index`)} ><h1>?</h1></div>
+      <div className='restartbutton' onClick={()=> restartSession()} > <div className='iconlayer' ><MdRestartAlt size={50} /></div></div>
       </div>
     </div>
   );
